@@ -78,3 +78,25 @@ $('#payment').change(function () {
   }
 });
   //FORM VALIDATION:
+
+let nameInput = document.getElementById('name');
+let emailInput = document.getElementById('mail');
+
+nameInput.addEventListener('blur', () => {
+  validName = /^[a-zA-Z\s]+$/.test(nameInput.value)
+  if (validName) {
+    nameInput.style.backgroundColor = '#00CC00'
+  } else {
+    nameInput.style.backgroundColor = '#FF0000'
+    $('#name').change('<input placeholder = "Must Be Valid Name"></input>');
+  }
+});
+
+emailInput.addEventListener('blur', () => {
+  validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)
+  if (validEmail) {
+    emailInput.style.backgroundColor = '#00CC00'
+  } else {
+    emailInput.style.backgroundColor = '#FF0000'
+  }
+});
