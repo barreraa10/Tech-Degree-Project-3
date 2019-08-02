@@ -85,18 +85,17 @@ let emailInput = document.getElementById('mail');
 nameInput.addEventListener('blur', () => {
   validName = /^[a-zA-Z\s]+$/.test(nameInput.value)
   if (validName) {
-    nameInput.style.backgroundColor = '#00CC00'
+    nameInput.style.borderColor = '#00CC00'
   } else {
-    nameInput.style.backgroundColor = '#FF0000'
-    $('#name').change('<input placeholder = "Must Be Valid Name"></input>');
+    nameInput.style.borderColor = '#FF0000'
   }
 });
 
 emailInput.addEventListener('blur', () => {
   validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)
   if (validEmail) {
-    emailInput.style.backgroundColor = '#00CC00'
+    emailInput.style.borderColor = '#00CC00'
   } else {
-    emailInput.style.backgroundColor = '#FF0000'
+    emailInput.style.borderColor = '#FF0000'
   }
 });
