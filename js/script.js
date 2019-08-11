@@ -79,7 +79,7 @@ $(":checkbox").on("change", function() {///event listener for checking of box
   
 
     //a loop designed to go through all the activities. Add it to the total if it doesn't conflict. 
-    //disable if time is conflicintg and don't add to total amount displayed. 
+    //disable if time is conflicting and don't add to total amount displayed. 
 
       for (let i = 0; i < $(":checkbox").length; i++) {
       let checkBoxParentText = $(":checkbox")[i].parentElement.innerText;
