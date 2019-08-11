@@ -54,9 +54,48 @@ $('#design').children().eq(0).hide();//once someone clicks on a design option, t
   });
 
 /////////////////////////////////////////////////////////////////////////ACTIVITY REGISTRATION SECTION//////////////////////////////////////////////////////////////////////
-let activityCost = 0
-const activities = document.querySelector('.activites');
-const totalCost = document.createElement('p');
+let totalCost = 0;    ///start by letting the total cost be '0'
+$('.activities').append("<span id= 'totalCost'></span>"); //append this span element which will later be used to show total cost of classes
+
+$(":checkbox").on("change", function() {///event listener for checking of box
+
+    let parentText = $(this)[0].parentElement.innerText; //returns parent label text of checkbox selected 
+    let dollarAmount = parentText.indexOf("$");  //returns the dollar index of the box selected 
+    let activityCost = parentText.slice(dollarAmount + 1);  //gets the actual cost of the activity to be stored and later used 
+
+   
+        if ($(this)[0].checked) { //if selected
+      totalCost += parseInt(activityCost);//returns back a number value and adds it to total cost
+    }   else {
+      totalCost -= parseInt(activityCost);//if unchecked, it removes it from the total cost, returns it to be a number as well to avoid NaN
+    }
+      let showTotalCost = $('#totalCost');//create variable to store the total cost in 
+
+    showTotalCost.text("Total Cost: $ " + totalCost);  //Assign the total activity cost to the show the totcal cost in the span element above
+
+    let boxCheckedDashIndex = parentText.indexOf("\u2014");  
+    let boxCheckedCommaIndex = parentText.indexOf(",");
+    let boxCheckedDateAndTime = parentText.slice(boxCheckedDashIndex + 1, boxCheckedCommaIndex);
+  
+
+    //a loop designed to go through all the activities. Add it to the total if it doesn't conflict. 
+    //disable if time is conflicintg and don't add to total amount displayed. 
+
+      for (let i = 0; i < $(":checkbox").length; i++) {
+      let checkBoxParentText = $(":checkbox")[i].parentElement.innerText;
+      let checkBoxDashIndex = checkBoxParentText.indexOf("\u2014");
+      let checkBoxCommaIndex = checkBoxParentText.indexOf(",");
+      let dateAndTime = checkBoxParentText.slice(checkBoxDashIndex + 1, checkBoxCommaIndex);
+     
+        if (boxCheckedDateAndTime == dateAndTime && parentText != checkBoxParentText) {
+        if ($(this)[0].checked) {
+          $(":checkbox")[i].disabled = true;
+        } else {
+         $(":checkbox")[i].disabled = false;
+        }
+     }
+      }
+});
 
 /////////////////////////////////////////////////////////////////////////DISPLAYING PAYMENT SECTION////////////////////////////////////////////////////////////////////////
 
@@ -212,7 +251,7 @@ const confirmedPayment = () => {
 //checking ot make sure at least 1 activity has been selected
 const validActivitiesChecked = () => {
   const activityCheck = $('.activities input:checkbox:checked').length;
-  const activtyTitle = $('.activities');
+  const activtyTitle = $('.activities legend');
   if (activityCheck >= 1) {
     return true;
   } else {
@@ -227,6 +266,6 @@ $('button').on('click', function(e) {
   if (confirmedPayment() && nameValidation() && emailValidation() && validActivitiesChecked()) {
   } else {
     e.preventDefault();
-    alert('Please review fields in red and/or blank. Be sure to provide accurate information. Thanks! ');///if an error/doesn't meet formatting rules, throws up messsage to check those fields in red or blank
+    alert('Please review fields in red and/or blank. Thanks! ');///if an error/doesn't meet formatting rules, throws up messsage to check those fields in red or blank
   }
 });
